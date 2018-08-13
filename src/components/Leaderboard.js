@@ -15,6 +15,7 @@ function Leaderboard ( {users} ) {
                     <p> {user.polls} Polls</p>
                     <p> {user.answers} Answers </p>
                 </div>
+
                 </li>
             ))}
         </ul>
