@@ -24,6 +24,7 @@ export function handleAddPoll (poll) {
             .then(()=> dispatch(hideLoading()))
     }
 }
+
 export function receivePolls(polls) {
     return {
         type: RECEIVE_POLLS,
