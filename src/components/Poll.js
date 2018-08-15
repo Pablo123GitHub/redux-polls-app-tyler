@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {getPercentage} from "../utils/helpers"
+import { handleAddAnswer} from "../actions/answers"
 
 
 const getVoteKeys = () => ['aVotes', 'bVotes', 'cVotes', 'dVotes']
@@ -9,7 +10,12 @@ class Poll extends Component {
 
     handleAnswer = (answer) => {
         const { poll, authedUser } = this.props
-        this.answer = true
+        this.answered = true
+        this.props.dispatch(handleAddAnswer({
+            authedUser,
+            answer,
+            id: poll.id,
+        }))
     }
 
 
@@ -26,7 +32,7 @@ class Poll extends Component {
 
         return (
             <div className='poll-container'>
-                <h1>
+                <h1 className='question'>
                     {poll.question}
                 </h1>
                 <div className='poll-author'>
@@ -38,12 +44,14 @@ class Poll extends Component {
                         return (
                             <li
                                 onClick={()=> {
-                                    if (vote === null && !this.answer){
+                                    if (vote === null && !this.answered){
                                         this.handleAnswer(key[0])
                                     }
                                 }}
 
-                                className={`option ${vote === key[0] ? 'chosen': ''}`}>
+                                className={`option ${vote === key[0] ? 'chosen': ''}`}
+                                key={key}
+                            >
                                 {vote === null
                                 ? poll[key]
                                 : <div className='result'>
